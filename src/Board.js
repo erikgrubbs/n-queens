@@ -137,7 +137,22 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
+    //if row-1 index-1 or row+1 index+1
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      console.log('whats the var given :',majorDiagonalColumnIndexAtFirstRow)
+      // var j = majorDiagonalColumnIndexAtFirstRow; 
+      // for (var i = 0; i < this.rows().length; i++) {
+      //     if (this.rows()[i][j]) {
+      //       if (this.rows()[i-1][j-1]) {
+      //         return true;
+      //       }
+      //       if (this.rows()[i+1][j+1]) {
+      //         return true;
+      //       }
+      //     } 
+        //if an index is 1
+          //check prev row index-1
+          //check next row index+1
       return false; // fixme
     },
 
