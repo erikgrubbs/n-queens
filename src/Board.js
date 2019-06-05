@@ -80,6 +80,18 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //if another piece on the row
+        //return tru
+      var row = this.rows()[rowIndex];
+      var count = 0;
+      for (var i = 0; i < row.length; i++) {
+        if (row[i]) {
+          count++
+          if (count > 1) {
+            return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
