@@ -143,7 +143,7 @@
       var columnIndex = majorDiagonalColumnIndexAtFirstRow;
       var length = this.rows().length;
       var count = 0;
-      for(var i = 0; i < length; i++) {
+      for (var i = 0; i < length; i++) {
         if (rows[i][columnIndex + i]) {
           count++;
         }
@@ -157,7 +157,7 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       var start = (this.rows().length - 1) * - 1;
-      for (var i = start ; i < this.rows().length - 1; i++) {
+      for (var i = start; i < this.rows().length - 1; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
@@ -175,20 +175,20 @@
       var columnIndex = minorDiagonalColumnIndexAtFirstRow;
       var length = this.rows().length;
       var count = 0;
-      for(var i = 0; i < length; i++) {
-          if (rows[i][columnIndex - i]) {
-            count++;
-          }
-          if (count > 1) {
-            return true;
-          }
+      for (var i = 0; i < length; i++) {
+        if (rows[i][columnIndex - i]) {
+          count++;
+        }
+        if (count > 1) {
+          return true;
+        }
       }    
       return false;
     },
   
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (var i = 0; i < (this.rows().length - 1)*2; i++) {
+      for (var i = 0; i < (this.rows().length - 1) * 2; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
