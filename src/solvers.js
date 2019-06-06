@@ -23,30 +23,23 @@ window.findNRooksSolution = function(n) {
   var piecesOnBoard = 0;
   if (n === 0) {
     return solution;
-  }
-  if (n === 1) {
+  } else if (n === 1) {
     return [[1]];
   }
-  
-  var recurser = function(init) {
-    var init = init || [0, 0];
-    for (var i = init[0]; i < n; i++) {
-      for (var j = init[1]; j < n; j++) {
-        if (!board.rows()[i][j]) {
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < n; j++) {
+      if (!board.rows()[i][j]) {
+        board.togglePiece(i, j);
+        piecesOnBoard++;
+        if (board.hasAnyRooksConflicts()) {
           board.togglePiece(i, j);
-          piecesOnBoard++;
-          if (board.hasAnyRooksConflicts()) {
-            board.togglePiece(i, j);
-            piecesOnBoard--;
-          } else if (piecesOnBoard === n) {
-            solution = board.rows();
-            return solution;
-          }
-        } 
+          piecesOnBoard--;
+        } else if (piecesOnBoard === n) {
+          solution = board.rows();
+        }
       } 
-    }
-  };
-  recurser();
+    } 
+  }
   //checks for conflicts 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -54,8 +47,52 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+  var board = new Board({
+    n: n
+  });
+  board.pieces = 0;
+  var lastPlaced = [0, 0];
 
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+  var findSolution = function(board, lastPlaced) {
+    for (var i = lastPlaced[0]; i < n; i++) {
+      for (var j = lastPlaced[1]; j < n; j++) {
+        if (!board.rows()[i][j]) {
+          board.togglePiece(i, j);
+          board.pieces++;
+          if (board.hasAnyRooksConflicts()) {
+            board.togglePiece(i, j);
+            board.pieces--;
+          } else if(board.pieces < n) {
+            lastPlaced = [i, j];
+          } else if (board.pieces === n) {
+            solutionCount++;
+            board.togglePiece(i, j);
+            board.pieces--;
+            board.togglePiece(lastPlaced[0], lastPlaced[1]);
+            board.pieces--;
+            lastPlaced[1] = lastPlaced[1] + 1
+            if(lastPlaced[1] >= n) {
+              lastPlaced[1] = 0
+              lastPlaced[0] = lastPlaced[0] + 1
+            }
+            board.togglePiece(lastPlaced[0], lastPlaced[1])
+            board.pieces++;
+            // console.log(board)
+            // console.log('i', i, 'j', j, [lastPlaced[0],lastPlaced[1]]);
+            findSolution(board, [0,0])
+          }
+        }
+      }
+      // lastPlaced[1] = 0;
+    }
+    
+
+  };
+  findSolution(board, lastPlaced);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
