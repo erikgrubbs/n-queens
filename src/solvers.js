@@ -135,9 +135,28 @@ window.countNQueensSolutions = function(n) {
       } 
       board.togglePiece(currentRow, i);
     }
-  };
+  }
   finder(0);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
-
+/*
+for when we understand bitwise
+window.countNQueensSolutions = function(n) {
+  recurse = function(n, ld, col, rd, solutionCount, poss, bit) {
+    solutionCount = 0;
+    if (!ld) {
+      n = (1 << n) - 1;
+    }
+    poss = ~(ld | col | rd) & n;
+    while (poss) {
+      bit = -poss & poss;
+      poss ^= bit;
+      solutionCount += recurse(n, (ld | bit) << 1, col | bit, 
+        (rd | bit) >> 1);
+    }
+    return solutionCount += col === n;
+  };
+  return recurse(n, 0, 0, 0);
+};
+*/
