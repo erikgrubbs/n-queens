@@ -135,7 +135,7 @@ window.countNQueensSolutions = function(n) {
       } 
       board.togglePiece(currentRow, i);
     }
-  }
+  };
   finder(0);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
